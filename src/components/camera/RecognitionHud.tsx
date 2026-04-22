@@ -9,7 +9,7 @@ export function RecognitionHud({ activeCount, winnerCount, message, countdown }:
   return (
     <div className="panel recognition-hud">
       <div className="recognition-meta">
-        <span>인식된 손가락 {activeCount}</span>
+        <span>인식된 검지 {activeCount}</span>
         <span>당첨 인원 {winnerCount}</span>
       </div>
       <p>{message}</p>
