@@ -9,6 +9,7 @@ export function useCamera() {
   const [isStarting, setIsStarting] = useState(false);
   const [permissionHint, setPermissionHint] = useState<string | null>(null);
   const hintTimerRef = useRef<number | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
   const clearPermissionHintTimer = useCallback(() => {
     if (hintTimerRef.current !== null) {
@@ -28,6 +29,7 @@ export function useCamera() {
 
     try {
       const next = await requestCameraStream();
+      streamRef.current = next;
       setStream(next);
       setError(null);
       setPermissionHint(null);
@@ -41,13 +43,19 @@ export function useCamera() {
   }, [clearPermissionHintTimer]);
 
   const stop = useCallback(() => {
-    stopCameraStream(stream);
+    stopCameraStream(streamRef.current);
+    streamRef.current = null;
     setStream(null);
     setPermissionHint(null);
     clearPermissionHintTimer();
-  }, [clearPermissionHintTimer, stream]);
+  }, [clearPermissionHintTimer]);
 
-  useEffect(() => stop, [stop]);
+  useEffect(() => {
+    return () => {
+      stopCameraStream(streamRef.current);
+      clearPermissionHintTimer();
+    };
+  }, [clearPermissionHintTimer]);
 
   return { stream, error, isStarting, permissionHint, start, stop };
 }
