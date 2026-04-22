@@ -16,4 +16,20 @@ describe("resolveHandsConstructor", () => {
     const Hands = class {};
     expect(resolveHandsConstructor({ "module.exports": { Hands } })).toBe(Hands);
   });
+
+  it("falls back to the global Hands constructor when the bundle registers it globally", () => {
+    const previousHands = (globalThis as Record<string, unknown>).Hands;
+    const Hands = class {};
+    (globalThis as Record<string, unknown>).Hands = Hands;
+
+    try {
+      expect(resolveHandsConstructor({})).toBe(Hands);
+    } finally {
+      if (previousHands === undefined) {
+        delete (globalThis as Record<string, unknown>).Hands;
+      } else {
+        (globalThis as Record<string, unknown>).Hands = previousHands;
+      }
+    }
+  });
 });
