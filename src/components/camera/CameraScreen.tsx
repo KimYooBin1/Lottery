@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import type { RefObject } from "react";
 import type { TrackedFinger } from "../../types/game";
 import { CameraCanvas } from "./CameraCanvas";
@@ -25,13 +24,6 @@ export function CameraScreen({
   countdown,
   onExit
 }: Props) {
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.srcObject = stream;
-      void videoRef.current.play();
-    }
-  }, [stream, videoRef]);
-
   return (
     <section className="camera-layout">
       <div className="camera-header">

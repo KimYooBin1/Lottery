@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { DEFAULT_GAME_CONFIG } from "../config/gameConfig";
+import { attachStreamToVideo } from "../lib/camera";
 import type { TrackedFinger } from "../types/game";
 import { getFingerCandidates, type HandPrediction } from "../vision/fingerDetector";
 import { reconcileTrackedFingers } from "../vision/fingerTracker";
@@ -15,8 +16,7 @@ export function useHandTracking(videoRef: RefObject<HTMLVideoElement>, stream: M
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !stream) return;
-    video.srcObject = stream;
-    void video.play();
+    void attachStreamToVideo(video, stream);
   }, [stream, videoRef]);
 
   useEffect(() => {
