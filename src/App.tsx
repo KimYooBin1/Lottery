@@ -12,7 +12,7 @@ import { captureResultImage } from "./features/capture/resultCapture";
 export default function App() {
   const [winnerCount, setWinnerCount] = useState(DEFAULT_GAME_CONFIG.winnerCount);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { stream, error, start, stop } = useCamera();
+  const { stream, error, isStarting, start, stop } = useCamera();
   const { tracked, activeFingers, statusMessage } = useHandTracking(videoRef, stream);
   const { state, countdown, result, reset } = useGameEngine(activeFingers, winnerCount);
   const shareSupported = useMemo(() => supportsFileShare(), []);
@@ -41,7 +41,12 @@ export default function App() {
   return (
     <div className="app-shell">
       {!stream ? (
-        <HomeScreen winnerCount={winnerCount} onWinnerCountChange={setWinnerCount} onStart={start} />
+        <HomeScreen
+          winnerCount={winnerCount}
+          isStarting={isStarting}
+          onWinnerCountChange={setWinnerCount}
+          onStart={start}
+        />
       ) : result ? (
         <ResultScreen
           winnerFingerIds={result.winnerFingerIds}
@@ -63,6 +68,7 @@ export default function App() {
           onExit={handleExit}
         />
       )}
+      {isStarting ? <p className="app-info">카메라 권한을 확인하고 있습니다...</p> : null}
       {error ? <p className="app-error">{error}</p> : null}
     </div>
   );

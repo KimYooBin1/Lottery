@@ -42,3 +42,8 @@ input {
   color: #ff9abf;
   margin-top: 16px;
 }
+
+.app-info {
+  color: rgba(255, 255, 255, 0.78);
+  margin-top: 16px;
+}

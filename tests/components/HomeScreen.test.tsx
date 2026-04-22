@@ -12,6 +12,7 @@ describe("HomeScreen", () => {
     render(
       <HomeScreen
         winnerCount={1}
+        isStarting={false}
         onWinnerCountChange={onWinnerCountChange}
         onStart={onStart}
       />
