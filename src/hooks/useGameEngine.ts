@@ -6,7 +6,11 @@ import type { DrawResult, GameState, TrackedFinger } from "../types/game";
 import { pickUniqueRandomItems } from "../utils/random";
 import { isStableForDuration } from "../utils/time";
 
-export function useGameEngine(activeFingers: TrackedFinger[], winnerCount: number) {
+export function useGameEngine(
+  activeFingers: TrackedFinger[],
+  winnerCount: number,
+  onDrawResult?: (winnerFingerIds: string[], winnerFingers: TrackedFinger[]) => void
+) {
   const [state, setState] = useState<GameState>("camera_ready");
   const [stableSince, setStableSince] = useState<number | null>(null);
   const [countdownStart, setCountdownStart] = useState<number | null>(null);
@@ -53,6 +57,8 @@ export function useGameEngine(activeFingers: TrackedFinger[], winnerCount: numbe
       }
       if (nextState === "drawing") {
         const winnerFingerIds = pickUniqueRandomItems(activeFingerIds, Math.min(winnerCount, activeFingerIds.length));
+        const winnerFingers = activeFingers.filter((finger) => winnerFingerIds.includes(finger.fingerId));
+        onDrawResult?.(winnerFingerIds, winnerFingers);
         setResult({
           winnerFingerIds,
           capturedAt: Date.now()
@@ -62,7 +68,7 @@ export function useGameEngine(activeFingers: TrackedFinger[], winnerCount: numbe
     }
 
     previousFingerIds.current = activeFingerIds;
-  }, [activeFingerIds, countdown, countdownStart, isStable, state, winnerCount]);
+  }, [activeFingerIds, activeFingers, countdown, countdownStart, isStable, onDrawResult, state, winnerCount]);
 
   function reset() {
     setStableSince(null);

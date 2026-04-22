@@ -1,5 +1,9 @@
+import type { TrackedFinger } from "../../types/game";
+
 type Props = {
   winnerFingerIds: string[];
+  winnerFingers: TrackedFinger[];
+  resultImageUrl: string | null;
   onRestart: () => void;
   onDownload: () => void;
   onShare: () => void;
@@ -9,6 +13,8 @@ type Props = {
 
 export function ResultScreen({
   winnerFingerIds,
+  winnerFingers,
+  resultImageUrl,
   onRestart,
   onDownload,
   onShare,
@@ -18,7 +24,31 @@ export function ResultScreen({
   return (
     <section className="panel result-screen">
       <h2>당첨!</h2>
-      <p>당첨 손가락 수: {winnerFingerIds.length}</p>
+      <p>노란색으로 표시된 손가락이 당첨입니다.</p>
+      {resultImageUrl ? (
+        <figure className="result-preview">
+          <img src={resultImageUrl} alt="당첨 결과 사진" />
+          <figcaption>당첨 손가락이 원형 테두리와 번호로 표시됩니다.</figcaption>
+        </figure>
+      ) : (
+        <div className="result-preview-placeholder">결과 사진을 만드는 중입니다...</div>
+      )}
+      <ol className="winner-list" aria-label="당첨 손가락 목록">
+        {winnerFingers.map((finger, index) => (
+          <li key={finger.fingerId}>
+            <strong>{index + 1}번 손가락</strong>
+            <span>{getFingerTypeLabel(finger.fingerType)}</span>
+          </li>
+        ))}
+        {winnerFingers.length === 0
+          ? winnerFingerIds.map((fingerId, index) => (
+              <li key={fingerId}>
+                <strong>{index + 1}번 손가락</strong>
+                <span>식별 정보 없음</span>
+              </li>
+            ))
+          : null}
+      </ol>
       <div className="result-actions">
         <button type="button" className="secondary-button" onClick={onRestart}>
         다시하기
@@ -39,4 +69,15 @@ export function ResultScreen({
       </div>
     </section>
   );
+}
+
+function getFingerTypeLabel(fingerType: TrackedFinger["fingerType"]) {
+  const labels: Record<TrackedFinger["fingerType"], string> = {
+    thumb: "엄지",
+    index: "검지",
+    middle: "중지",
+    ring: "약지",
+    pinky: "새끼"
+  };
+  return labels[fingerType];
 }
