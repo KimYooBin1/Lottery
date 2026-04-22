@@ -1,0 +1,11 @@
+:root {
+  --bg-start: #12091f;
+  --bg-end: #2e183f;
+  --panel: rgba(23, 16, 42, 0.82);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --text-main: #ffffff;
+  --text-sub: rgba(255, 255, 255, 0.72);
+  --accent: #ff4f9f;
+  --accent-2: #ffe95b;
+  --button-text: #12091f;
+}

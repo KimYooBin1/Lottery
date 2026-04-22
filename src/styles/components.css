@@ -1,0 +1,118 @@
+.home-screen,
+.result-screen {
+  display: grid;
+  gap: 18px;
+}
+
+.home-screen h1,
+.result-screen h2 {
+  margin: 0;
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent-2);
+  font-weight: 700;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stepper button,
+.primary-button,
+.secondary-button,
+.ghost-button,
+.camera-header button {
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 24px;
+  cursor: pointer;
+}
+
+.stepper button,
+.secondary-button {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--text-main);
+}
+
+.primary-button {
+  background: var(--accent);
+  color: white;
+}
+
+.ghost-button,
+.camera-header button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: var(--text-main);
+}
+
+.stepper-value {
+  min-width: 40px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.camera-layout {
+  display: grid;
+  gap: 18px;
+}
+
+.camera-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.camera-header h2 {
+  margin: 0;
+}
+
+.camera-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0c0715;
+  min-height: 420px;
+}
+
+.camera-video,
+.camera-overlay {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.camera-overlay {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+
+.recognition-hud {
+  display: grid;
+  gap: 12px;
+}
+
+.recognition-meta {
+  display: flex;
+  gap: 16px;
+  color: var(--text-sub);
+}
+
+.countdown-value {
+  font-size: 4rem;
+  color: var(--accent-2);
+}
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
