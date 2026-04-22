@@ -13,6 +13,15 @@ type HandsConstructor = new (config: { locateFile: (file: string) => string }) =
   close: () => void;
 };
 
+function resolveGlobalHandsConstructor(): HandsConstructor | null {
+  const globalScope = globalThis as Record<string, unknown> | undefined;
+  if (globalScope && typeof globalScope.Hands === "function") {
+    return globalScope.Hands as HandsConstructor;
+  }
+
+  return null;
+}
+
 export function resolveHandsConstructor(moduleObject: Record<string, unknown>): HandsConstructor {
   if (typeof moduleObject.Hands === "function") {
     return moduleObject.Hands as HandsConstructor;
@@ -26,6 +35,11 @@ export function resolveHandsConstructor(moduleObject: Record<string, unknown>): 
   const commonJsExport = moduleObject["module.exports"] as Record<string, unknown> | undefined;
   if (commonJsExport && typeof commonJsExport.Hands === "function") {
     return commonJsExport.Hands as HandsConstructor;
+  }
+
+  const globalHands = resolveGlobalHandsConstructor();
+  if (globalHands) {
+    return globalHands;
   }
 
   throw new Error("MediaPipe Hands constructor를 찾을 수 없습니다.");
