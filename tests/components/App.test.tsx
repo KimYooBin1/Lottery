@@ -54,7 +54,7 @@ describe("App start flow", () => {
     expect(screen.getByRole("button", { name: /카메라 요청 중/i })).toBeDisabled();
 
     await waitFor(() => {
-      expect(screen.getByText(/손가락을 화면 안에 넣어 주세요/i)).toBeInTheDocument();
+      expect(screen.getByText(/검지를 화면 안에 넣어 주세요/i)).toBeInTheDocument();
     });
     expect(stopTrack).not.toHaveBeenCalled();
   });

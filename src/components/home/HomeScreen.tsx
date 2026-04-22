@@ -9,8 +9,8 @@ export function HomeScreen({ winnerCount, isStarting = false, onWinnerCountChang
   return (
     <section className="panel home-screen">
       <p className="eyebrow">웹캠 랜덤 게임</p>
-      <h1>손가락 뽑기 게임</h1>
-      <p>웹캠으로 손가락을 인식해 오늘의 당첨자를 뽑습니다.</p>
+      <h1>검지 뽑기 게임</h1>
+      <p>웹캠으로 참여자의 검지를 인식해 오늘의 당첨자를 뽑습니다.</p>
       <div className="stepper">
         <button
           type="button"

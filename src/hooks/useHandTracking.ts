@@ -9,7 +9,7 @@ import { createHandsDetector } from "../vision/handLandmarks";
 
 export function useHandTracking(videoRef: RefObject<HTMLVideoElement>, stream: MediaStream | null) {
   const [tracked, setTracked] = useState<TrackedFinger[]>([]);
-  const [statusMessage, setStatusMessage] = useState("손가락을 화면 안에 넣어 주세요");
+  const [statusMessage, setStatusMessage] = useState("검지를 화면 안에 넣어 주세요");
   const detectorRef = useRef<Awaited<ReturnType<typeof createHandsDetector>> | null>(null);
   const animationFrameRef = useRef<number | null>(null);
 
@@ -64,9 +64,9 @@ export function useHandTracking(videoRef: RefObject<HTMLVideoElement>, stream: M
 
   useEffect(() => {
     if (activeFingers.length === 0) {
-      setStatusMessage("손가락을 화면 안에 넣어 주세요");
+      setStatusMessage("검지를 화면 안에 넣어 주세요");
     } else if (activeFingers.length < DEFAULT_GAME_CONFIG.winnerCount) {
-      setStatusMessage("당첨 인원 수보다 많은 손가락이 필요합니다");
+      setStatusMessage("당첨 인원 수보다 많은 검지가 필요합니다");
     } else {
       setStatusMessage("잠시 그대로 유지해 주세요");
     }
