@@ -47,7 +47,9 @@ describe("App start flow", () => {
     render(<App />);
     fireEvent.click(screen.getByRole("button", { name: /시작하기/i }));
 
+    expect(screen.getByRole("heading", { name: /카메라 연결 준비/i })).toBeInTheDocument();
     expect(screen.getByText(/카메라 권한을 확인하고 있습니다/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /카메라 요청 중/i })).toBeDisabled();
 
     await waitFor(() => {
       expect(screen.getByText(/손가락을 화면 안에 넣어 주세요/i)).toBeInTheDocument();
@@ -67,7 +69,8 @@ describe("App start flow", () => {
     render(<App />);
     fireEvent.click(screen.getByRole("button", { name: /시작하기/i }));
 
-    expect(screen.getByRole("button", { name: /카메라 준비 중/i })).toBeDisabled();
+    expect(screen.getByRole("heading", { name: /카메라 연결 준비/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /카메라 요청 중/i })).toBeDisabled();
     expect(screen.getByText(/카메라 권한을 확인하고 있습니다/i)).toBeInTheDocument();
 
     await act(async () => {
@@ -75,5 +78,7 @@ describe("App start flow", () => {
     });
 
     expect(screen.getByText(/주소창의 카메라 아이콘을 눌러 접근을 허용/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /카메라 요청 중/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: /처음으로/i })).toBeInTheDocument();
   });
 });

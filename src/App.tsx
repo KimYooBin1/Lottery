@@ -1,5 +1,6 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { HomeScreen } from "./components/home/HomeScreen";
+import { CameraPermissionScreen } from "./components/home/CameraPermissionScreen";
 import { CameraScreen } from "./components/camera/CameraScreen";
 import { ResultScreen } from "./components/result/ResultScreen";
 import { DEFAULT_GAME_CONFIG } from "./config/gameConfig";
@@ -11,11 +12,19 @@ import { captureResultImage } from "./features/capture/resultCapture";
 
 export default function App() {
   const [winnerCount, setWinnerCount] = useState(DEFAULT_GAME_CONFIG.winnerCount);
+  const [isPreparingCamera, setIsPreparingCamera] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const { stream, error, isStarting, permissionHint, start, stop } = useCamera();
   const { tracked, activeFingers, statusMessage } = useHandTracking(videoRef, stream);
   const { state, countdown, result, reset } = useGameEngine(activeFingers, winnerCount);
   const shareSupported = useMemo(() => supportsFileShare(), []);
+  const showPermissionScreen = !stream && isPreparingCamera;
+
+  useEffect(() => {
+    if (stream) {
+      setIsPreparingCamera(false);
+    }
+  }, [stream]);
 
   async function handleDownload() {
     if (!videoRef.current || !result) return;
@@ -36,16 +45,40 @@ export default function App() {
   function handleExit() {
     stop();
     reset();
+    setIsPreparingCamera(false);
+  }
+
+  function handleStart() {
+    setIsPreparingCamera(true);
+    void start();
+  }
+
+  function handleRetryCamera() {
+    void start();
+  }
+
+  function handleBackHome() {
+    stop();
+    reset();
+    setIsPreparingCamera(false);
   }
 
   return (
     <div className="app-shell">
-      {!stream ? (
+      {showPermissionScreen ? (
+        <CameraPermissionScreen
+          isStarting={isStarting}
+          permissionHint={permissionHint}
+          error={error}
+          onRetry={handleRetryCamera}
+          onBack={handleBackHome}
+        />
+      ) : !stream ? (
         <HomeScreen
           winnerCount={winnerCount}
           isStarting={isStarting}
           onWinnerCountChange={setWinnerCount}
-          onStart={start}
+          onStart={handleStart}
         />
       ) : result ? (
         <ResultScreen
@@ -68,9 +101,9 @@ export default function App() {
           onExit={handleExit}
         />
       )}
-      {isStarting ? <p className="app-info">카메라 권한을 확인하고 있습니다...</p> : null}
-      {permissionHint ? <p className="app-info">{permissionHint}</p> : null}
-      {error ? <p className="app-error">{error}</p> : null}
+      {!showPermissionScreen && isStarting ? <p className="app-info">카메라 권한을 확인하고 있습니다...</p> : null}
+      {!showPermissionScreen && permissionHint ? <p className="app-info">{permissionHint}</p> : null}
+      {!showPermissionScreen && error ? <p className="app-error">{error}</p> : null}
     </div>
   );
 }
