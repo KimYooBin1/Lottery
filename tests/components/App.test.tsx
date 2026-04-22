@@ -16,6 +16,8 @@ describe("App start flow", () => {
   });
 
   it("shows camera request feedback immediately after clicking start", async () => {
+    const stopTrack = vi.fn();
+
     Object.defineProperty(HTMLMediaElement.prototype, "play", {
       configurable: true,
       value: vi.fn().mockResolvedValue(undefined)
@@ -38,7 +40,7 @@ describe("App start flow", () => {
         getUserMedia: vi.fn(
           () =>
             new Promise<MediaStream>((resolve) => {
-              setTimeout(() => resolve({ getTracks: () => [] } as unknown as MediaStream), 50);
+              setTimeout(() => resolve({ getTracks: () => [{ stop: stopTrack }] } as unknown as MediaStream), 50);
             })
         )
       }
@@ -54,6 +56,7 @@ describe("App start flow", () => {
     await waitFor(() => {
       expect(screen.getByText(/손가락을 화면 안에 넣어 주세요/i)).toBeInTheDocument();
     });
+    expect(stopTrack).not.toHaveBeenCalled();
   });
 
   it("shows permission guidance when the camera request stays pending", async () => {
