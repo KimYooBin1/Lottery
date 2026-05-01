@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getNextGameState } from "../../src/engine/gameMachine";
+import { areSameFingerSet, getNextGameState } from "../../src/engine/gameMachine";
 import { DEFAULT_GAME_CONFIG } from "../../src/config/gameConfig";
 
 describe("game machine", () => {
@@ -29,5 +29,21 @@ describe("game machine", () => {
         countdownFinished: false
       })
     ).toBe("arming");
+  });
+
+  it("keeps counting down when the same active set is reported in a different order", () => {
+    expect(
+      getNextGameState("countdown", {
+        activeFingerIds: ["f2", "f1"],
+        previousFingerIds: ["f1", "f2"],
+        isStable: false,
+        countdownFinished: false
+      })
+    ).toBe("countdown");
+  });
+
+  it("compares finger id collections as sets", () => {
+    expect(areSameFingerSet(["f2", "f1"], ["f1", "f2"])).toBe(true);
+    expect(areSameFingerSet(["f1", "f2"], ["f1", "f3"])).toBe(false);
   });
 });

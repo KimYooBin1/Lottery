@@ -110,6 +110,18 @@
   height: 100%;
 }
 
+.camera-countdown {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--accent-2);
+  font-size: clamp(5rem, 18vw, 12rem);
+  line-height: 1;
+  text-shadow: 0 10px 36px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+
 .recognition-hud {
   display: grid;
   gap: 12px;
@@ -119,11 +131,6 @@
   display: flex;
   gap: 16px;
   color: var(--text-sub);
-}
-
-.countdown-value {
-  font-size: 4rem;
-  color: var(--accent-2);
 }
 
 .result-actions {

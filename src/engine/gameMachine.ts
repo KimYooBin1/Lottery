@@ -7,6 +7,14 @@ type TransitionInput = {
   countdownFinished: boolean;
 };
 
+export function areSameFingerSet(left: string[], right: string[]) {
+  if (left.length !== right.length) return false;
+
+  const sortedLeft = [...left].sort();
+  const sortedRight = [...right].sort();
+  return sortedLeft.every((id, index) => id === sortedRight[index]);
+}
+
 export function getNextGameState(state: GameState, input: TransitionInput): GameState {
   switch (state) {
     case "camera_ready":
@@ -14,7 +22,7 @@ export function getNextGameState(state: GameState, input: TransitionInput): Game
     case "arming":
       return input.isStable ? "countdown" : "arming";
     case "countdown":
-      if (input.activeFingerIds.join(",") !== input.previousFingerIds.join(",")) {
+      if (!areSameFingerSet(input.activeFingerIds, input.previousFingerIds)) {
         return "arming";
       }
       return input.countdownFinished ? "drawing" : "countdown";
