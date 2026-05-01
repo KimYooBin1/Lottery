@@ -6,9 +6,10 @@ type Props = {
   videoRef: RefObject<HTMLVideoElement>;
   trackedFingers: TrackedFinger[];
   winnerFingerIds?: string[];
+  countdown?: number;
 };
 
-export function CameraCanvas({ videoRef, trackedFingers, winnerFingerIds = [] }: Props) {
+export function CameraCanvas({ videoRef, trackedFingers, winnerFingerIds = [], countdown }: Props) {
   const overlayRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -44,6 +45,7 @@ export function CameraCanvas({ videoRef, trackedFingers, winnerFingerIds = [] }:
     <div className="camera-stage">
       <video ref={videoRef} autoPlay playsInline muted className="camera-video" />
       <canvas ref={overlayRef} className="camera-overlay" />
+      {countdown !== undefined ? <strong className="camera-countdown">{countdown}</strong> : null}
     </div>
   );
 }

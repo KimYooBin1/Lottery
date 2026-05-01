@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { DEFAULT_GAME_CONFIG } from "../config/gameConfig";
 import { getCountdownRemaining } from "../engine/countdown";
-import { getNextGameState } from "../engine/gameMachine";
+import { areSameFingerSet, getNextGameState } from "../engine/gameMachine";
 import type { DrawResult, GameState, TrackedFinger } from "../types/game";
 import { pickUniqueRandomItems } from "../utils/random";
 import { isStableForDuration } from "../utils/time";
@@ -26,7 +26,7 @@ export function useGameEngine(
 
   useEffect(() => {
     const previous = previousFingerIds.current;
-    const sameSet = activeFingerIds.join(",") === previous.join(",");
+    const sameSet = areSameFingerSet(activeFingerIds, previous);
 
     if (activeFingerIds.length === 0) {
       setState("camera_ready");

@@ -32,12 +32,11 @@ export function CameraScreen({
           종료
         </button>
       </div>
-      <CameraCanvas videoRef={videoRef} trackedFingers={trackedFingers} />
+      <CameraCanvas videoRef={videoRef} trackedFingers={trackedFingers} countdown={countdown} />
       <RecognitionHud
         activeCount={activeFingers.length}
         winnerCount={winnerCount}
         message={message}
-        countdown={countdown}
       />
     </section>
   );
