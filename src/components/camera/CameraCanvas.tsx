@@ -35,7 +35,7 @@ export function CameraCanvas({ videoRef, trackedFingers, winnerFingerIds = [], c
       const isWinner = winnerFingerIds.includes(finger.fingerId);
       ctx.beginPath();
       ctx.arc(finger.x * width, finger.y * height, isWinner ? 26 : 18, 0, Math.PI * 2);
-      ctx.strokeStyle = isWinner ? "#ffe95b" : finger.status === "active" ? "#ff4f9f" : "#ffffff";
+      ctx.strokeStyle = isWinner ? "#ffffff" : finger.status === "active" ? "#ffffff" : "rgba(255,255,255,0.55)";
       ctx.lineWidth = isWinner ? 6 : 4;
       ctx.stroke();
     });

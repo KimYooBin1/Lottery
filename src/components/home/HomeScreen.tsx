@@ -8,9 +8,9 @@ type Props = {
 export function HomeScreen({ winnerCount, isStarting = false, onWinnerCountChange, onStart }: Props) {
   return (
     <section className="panel home-screen">
-      <p className="eyebrow">웹캠 랜덤 게임</p>
-      <h1>검지 뽑기 게임</h1>
-      <p>웹캠으로 참여자의 검지를 인식해 오늘의 당첨자를 뽑습니다.</p>
+      <p className="eyebrow">WEBCAM DRAWING TOOL</p>
+      <h1>DRAW</h1>
+      <p>프레임 안의 검지를 기준으로 참여자를 인식하고 순서를 정하지 않은 추첨을 실행합니다.</p>
       <div className="stepper">
         <button
           type="button"
@@ -26,7 +26,7 @@ export function HomeScreen({ winnerCount, isStarting = false, onWinnerCountChang
         </button>
       </div>
       <button type="button" className="primary-button" onClick={onStart} disabled={isStarting}>
-        {isStarting ? "카메라 준비 중..." : "시작하기"}
+        {isStarting ? "카메라 준비 중" : "실행"}
       </button>
     </section>
   );

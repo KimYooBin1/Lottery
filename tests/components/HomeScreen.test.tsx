@@ -19,7 +19,9 @@ describe("HomeScreen", () => {
     );
 
     await user.click(screen.getByRole("button", { name: "+" }));
-    await user.click(screen.getByRole("button", { name: /시작하기/i }));
+    expect(screen.getByRole("heading", { name: "DRAW" })).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /실행/i }));
 
     expect(onWinnerCountChange).toHaveBeenCalled();
     expect(onStart).toHaveBeenCalledTimes(1);

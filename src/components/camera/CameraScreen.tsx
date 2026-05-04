@@ -27,7 +27,7 @@ export function CameraScreen({
   return (
     <section className="camera-layout">
       <div className="camera-header">
-        <h2>이번엔 누가 쏠까?</h2>
+        <h2>DRAW IN PROGRESS</h2>
         <button type="button" onClick={onExit}>
           종료
         </button>

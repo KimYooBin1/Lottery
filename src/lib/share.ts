@@ -17,7 +17,7 @@ export async function shareBlob(blob: Blob, fileName: string) {
     throw new Error("이 브라우저에서는 파일 공유를 지원하지 않습니다.");
   }
   await navigator.share({
-    title: "손가락 뽑기 결과",
+    title: "DRAW 결과",
     files: [file]
   });
 }

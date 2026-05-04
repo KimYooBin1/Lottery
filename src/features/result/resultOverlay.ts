@@ -8,7 +8,7 @@ export function drawResultOverlay(
   winnerFingerIds: string[],
   winnerCount: number
 ) {
-  ctx.fillStyle = "rgba(14, 7, 24, 0.26)";
+  ctx.fillStyle = "rgba(0, 0, 0, 0.42)";
   ctx.fillRect(0, 0, width, height);
 
   let winnerIndex = 0;
@@ -19,17 +19,17 @@ export function drawResultOverlay(
     const y = finger.y * height;
     ctx.beginPath();
     ctx.arc(x, y, isWinner ? 34 : 20, 0, Math.PI * 2);
-    ctx.strokeStyle = isWinner ? "#ffe95b" : "rgba(255,255,255,0.5)";
-    ctx.lineWidth = isWinner ? 8 : 4;
+    ctx.strokeStyle = isWinner ? "#ffffff" : "rgba(255,255,255,0.48)";
+    ctx.lineWidth = isWinner ? 7 : 3;
     ctx.stroke();
 
     if (isWinner) {
       winnerIndex += 1;
-      ctx.fillStyle = "#ffe95b";
+      ctx.fillStyle = "#ffffff";
       ctx.beginPath();
       ctx.arc(x + 38, y - 38, 26, 0, Math.PI * 2);
       ctx.fill();
-      ctx.fillStyle = "#12091f";
+      ctx.fillStyle = "#000000";
       ctx.font = "700 28px sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -41,7 +41,7 @@ export function drawResultOverlay(
 
   ctx.fillStyle = "#ffffff";
   ctx.font = "700 56px sans-serif";
-  ctx.fillText("당첨!", 48, 84);
+  ctx.fillText("SELECTED", 48, 84);
   ctx.font = "400 28px sans-serif";
-  ctx.fillText(`당첨 인원 ${winnerCount}명`, 48, 126);
+  ctx.fillText(`DRAW COUNT ${winnerCount}`, 48, 126);
 }

@@ -28,9 +28,9 @@ describe("ResultScreen", () => {
       />
     );
 
-    expect(screen.getByRole("img", { name: /당첨 결과 사진/i })).toHaveAttribute("src", "blob:result-preview");
-    expect(screen.getByText(/1번 검지/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /다시하기/i })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /DRAW 결과 이미지/i })).toHaveAttribute("src", "blob:result-preview");
+    expect(screen.getByText(/SELECT 01/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /다시 실행/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /다운로드/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /공유/i })).toBeInTheDocument();
   });

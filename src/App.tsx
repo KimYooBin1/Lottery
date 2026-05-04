@@ -67,14 +67,14 @@ export default function App() {
   async function handleDownload() {
     if (!result) return;
     if (resultImageBlob) {
-      downloadBlob(resultImageBlob, `finger-lottery-result-${Date.now()}.png`);
+      downloadBlob(resultImageBlob, `draw-result-${Date.now()}.png`);
     }
   }
 
   async function handleShare() {
     if (!result) return;
     if (resultImageBlob) {
-      await shareBlob(resultImageBlob, `finger-lottery-result-${Date.now()}.png`);
+      await shareBlob(resultImageBlob, `draw-result-${Date.now()}.png`);
     }
   }
 
